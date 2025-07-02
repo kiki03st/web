@@ -1,0 +1,201 @@
+:root{
+	font-size: 10px;
+}
+
+html, body{
+	width: 100%;
+}
+
+#title{
+	font-size: 1.5rem;
+	z-index: 1000;
+	display: flex;
+	justify-content: center;
+	background: rgba(255, 255, 255, 0.9);
+}
+header{
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 50%;
+	transform: translate(-50%, 0);
+	border-bottom: 1px solid #ccc;
+}
+main{
+	margin-top: 7rem;
+}
+#content{
+	min-width: 500px;
+	max-width: 720px;
+	margin: 0 auto;
+	display: flex;
+	flex-direction: column;
+	padding: 1rem 0 1rem 0;
+	
+}
+.add-todo{
+	display: flex;
+	flex-direction: row;
+	padding: 1rem;
+	margin: 1rem 0;
+	border-radius: 4rem;
+	border: 1px solid #ccc;
+	background: #eee;
+}
+#content>.todo{
+	max-width: 0;
+	opacity: 0;
+	display: flex;
+	flex-direction: row;
+	padding: 1rem;
+	margin: 1rem 0;
+	border-radius: 4rem;
+	border: 1px solid #ccc;
+	background: #eee;
+	transition: opacity 0.5s ease, max-width 0.5s ease;
+}
+#content>.todo.show{
+	opacity: 1;
+	max-width: inherit;
+}
+.color-list{
+	margin-right: 1rem;
+	display: flex;
+	flex-direction: row;
+	height: 4rem;
+	min-width: 4rem;
+	border-radius: 2rem;
+	background: white;
+	overflow: hidden;
+	justify-content: center;
+	align-items: center;
+}
+.color-list>.present{
+	width: 3rem;
+	height: 3rem;
+	border: none;
+	margin: 0.5rem;
+	border-radius: 1.5rem;
+}
+.color-list>.color-dropdown{
+	overflow: hidden;
+	background: white;
+	max-width: 0;
+	opacity: 0;
+	transition: max-width 0.5s ease, opacity 0.5s ease;
+}
+.color-list>.color-dropdown.show{
+	max-width: 30rem;
+	opacity: 1;
+}
+.color-dropdown>ul>li>button{
+	width: 3rem;
+	height: 3rem;
+	border: 0;
+	margin: 0.5rem;
+	border-radius: 1.5rem;
+}
+.color-dropdown>ul>li>.preview{
+	width: 3rem;
+	height: 3rem;
+	margin: 0.5rem;
+	border-radius: 1.5rem;
+	background: conic-gradient(
+    red,
+    orange,
+    yellow,
+    green,
+    blue,
+    indigo,
+    violet,
+    red
+  );
+}
+.color-dropdown>ul>li>input{
+	position: absolute;
+	top: 0;
+	left: 20rem;
+	opacity: 0;
+	width: 3rem;
+	height: 3rem;
+	margin: 0.5rem;
+	border-radius: 1.5rem;
+}
+.red{
+	background: red;
+}
+.orange{
+	background: orange;
+}
+.yellow{
+	background: yellow;
+}
+.green{
+	background: green;
+}
+.blue{
+	background: blue;
+}
+.color-dropdown>ul{
+	position: relative;
+	list-style: none;
+	padding: 0;
+	display: flex;
+	flex-direction: row;
+}
+
+#setting{
+	display: none;
+}
+
+input[name="todo"]{
+	padding: 0 2rem;
+	flex-grow: 1;
+	min-width: 30rem;
+	border-radius: 2rem;
+}
+.add{
+	margin-left: 1rem;
+	width: 4rem;
+	height: 4rem;
+	border-radius: 2rem;
+	border: none;
+}
+.set{
+	margin-left: 1rem;
+	min-width: 4rem;
+	height: 4rem;
+	border-radius: 2rem;
+	border: 1px solid #ccc;
+	display: flex;
+	flex-direction: row;
+}
+.set>.preview.show{
+	width: 4rem;
+	opacity: 1;
+}
+.set>.preview{
+	transition: width 0.3s ease, opacity 0.3s ease;
+	opacity: 0;
+	overflow: hidden;
+	background: white;
+	width: 0;
+	height: 4rem;
+	border-radius: inherit;
+	background: #eee;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+.set>.etc{
+	max-width: 0;
+	height: 4rem;
+	border-radius: inherit;
+	opacity: 0;
+	transition: opacity 0.3s ease, max-width 0.3s ease;
+	
+}
+.set>.etc.show{
+	max-width: 12rem;
+	opacity: 1;
+}
