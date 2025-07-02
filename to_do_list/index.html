@@ -17,43 +17,45 @@
 		</header>
 		<main>
 			<div id="content-wrap">
-				<div id="setting">
-					<h2>
-						Setting
-					</h2>
-					<div class="due_date">
-						<label for="date">Due Date: </label>
-						<input id="date" type="datetime-local" />
-					</div>
-					<div class="todo">
-						<label for="todo">To Do: </label>
-						<input id="todo" minlength="1" type="text" placeholder="Write To-Do (Not Empty)" />
-					</div>
-					<div class="color">
-						<p>
-							Color: 
-						</p>
-						<div class="color-list">
-							<button class="present"></button>
-							<div class="color-dropdown hidden">
-								<ul>
-									<li><button class="red" onclick="color_pick(this)"></button></li>
-									<li><button class="orange" onclick="color_pick(this)"></button></li>
-									<li><button class="yellow" onclick="color_pick(this)"></button></li>
-									<li><button class="green" onclick="color_pick(this)"></button></li>
-									<li><button class="blue" onclick="color_pick(this)"></button></li>
-									<li>
-										<div class="preview"></div>
-										<input id="setting" name="color-choice" type="color" />
-									</li>
-								</ul>
+				<div id="setting-background" class="hidden">
+					<div id="setting">
+						<h2>
+							Setting
+						</h2>
+						<div class="due_date">
+							<label for="date">Due Date: </label>
+							<input id="date" type="datetime-local" />
+						</div>
+						<div class="todo">
+							<label for="todo">To Do: </label>
+							<input id="todo" minlength="1" type="text" placeholder="Write To-Do (Not Empty)" />
+						</div>
+						<div class="color">
+							<p>
+								Color: 
+							</p>
+							<div class="color-list">
+								<button class="present"></button>
+								<div class="color-dropdown hidden">
+									<ul>
+										<li><button class="red" onclick="color_pick(this)"></button></li>
+										<li><button class="orange" onclick="color_pick(this)"></button></li>
+										<li><button class="yellow" onclick="color_pick(this)"></button></li>
+										<li><button class="green" onclick="color_pick(this)"></button></li>
+										<li><button class="blue" onclick="color_pick(this)"></button></li>
+										<li>
+											<div class="preview"></div>
+											<input id="setting" name="color-choice" type="color" />
+										</li>
+									</ul>
+								</div>
 							</div>
 						</div>
-					</div>
-					<div class="result">
-						<div class="save">Save</div>
-						<div class="delete">Delete</div>
-						<div class="cancel">Cancel</div>
+						<div class="result">
+							<button class="save">Save</button>
+							<button class="delete">Delete</button>
+							<button class="cancel" onclick="Button_Edit(this)">Cancel</button>
+						</div>
 					</div>
 				</div>
 			</div>

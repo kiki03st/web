@@ -7,7 +7,7 @@ const To_Do_Bar = `
 <div class="color-list">
 	<button class="present"></button>
 </div>
-<input type="text" name="todo" placeholder="   Write To-Do (Not Empty)" readonly/>
+<input type="text" name="todo" placeholder="Write To-Do (Not Empty)" readonly/>
 <div class="set" onmouseenter="etc_show(this)" onmouseleave="etc_hide(this)">
 	<button class="preview show">
 		<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
@@ -15,8 +15,16 @@ const To_Do_Bar = `
 		</svg>
 	</button>
 	<div class='etc hidden'>
-		<button class='edit'></button>
-		<button class='delete'></button>
+		<button class='edit' onclick="Button_Edit(this)">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+				<path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+			</svg>
+		</button>
+		<button class='check' onclick="Button_Check(this)">
+			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+				<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
+			</svg>
+		</button>
 	</div>
 </div>
 `;
@@ -86,4 +94,13 @@ function etc_hide(item){
 	item.querySelector('.preview').classList.add('show');
 	item.querySelector('.etc').classList.remove('show');
 	item.querySelector('.etc').classList.add('hidden');
+}
+
+function Button_Edit(item){
+	const setting = document.getElementById('setting-background');
+	setting.classList.toggle('show');
+}
+
+function Button_Check(item){
+	
 }
