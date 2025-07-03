@@ -2,6 +2,7 @@ const color_present = document.querySelectorAll(".present");
 const color_dropdown = document.querySelectorAll(".color-dropdown");
 const color_picker_preview = document.querySelectorAll(".color-dropdown ul li .preview");
 const color_picker = document.querySelectorAll(".color-dropdown ul li input");
+let present_object = null;
 
 const To_Do_Bar = `
 <div class="color-list">
@@ -69,6 +70,7 @@ function color_pick(item){
 function Add_To_Do(item){
 	const To_Do = document.createElement('div');
 	To_Do.classList.add('todo');
+	To_Do.setAttribute('data-id', Create_ID());
 	To_Do.innerHTML = To_Do_Bar;
 	const input_string = item.closest('.add-todo').querySelector('input[name="todo"]').value;
 	To_Do.querySelector('input').value = input_string;
@@ -76,6 +78,21 @@ function Add_To_Do(item){
 	const parent = document.getElementById('content');
 	
 	parent.appendChild(To_Do);
+	requestAnimationFrame(() => {
+		const p_list = parent.querySelectorAll('.todo');
+		p_list[p_list.length - 1].classList.add('show');
+	})
+}
+function Render_Bar(id){
+	const bar = document.createElement('div');
+	bar.classList.add('todo');
+	bar.setAttribute('data-id', id);
+	const element = JSON.parse(localstorage.getItem(id));
+	bar.innerHTML = To_Do_Bar;
+	bar.querySelector('input').value = element.todo;
+	bar.querySelector('.color-list>.present').style.background = id.color;
+	const parent = document.getElementById('content');
+	parent.appendChild(bar);
 	requestAnimationFrame(() => {
 		const p_list = parent.querySelectorAll('.todo');
 		p_list[p_list.length - 1].classList.add('show');
@@ -98,9 +115,25 @@ function etc_hide(item){
 
 function Button_Edit(item){
 	const setting = document.getElementById('setting-background');
+	if(setting.classList.contains("show")){
+		present_object = null;
+	}
+	else{
+		present_object = item.closest(".todo");
+		
+	}
 	setting.classList.toggle('show');
 }
 
 function Button_Check(item){
 	
 }
+
+function Button_Save(){
+	
+}
+
+function Create_ID(){
+	return `${Math.floor(Math.random()*10000)}${Date.now()}`;
+}
+
