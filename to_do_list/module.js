@@ -3,6 +3,7 @@ const color_dropdown = document.querySelectorAll(".color-dropdown");
 const color_picker_preview = document.querySelectorAll(".color-dropdown ul li .preview");
 const color_picker = document.querySelectorAll(".color-dropdown ul li input");
 let present_object = null;
+const setting = document.getElementById('setting-background');
 
 const To_Do_Bar = `
 <div class="color-list">
@@ -68,35 +69,35 @@ function color_pick(item){
 }
 
 function Add_To_Do(item){
-	const To_Do = document.createElement('div');
-	To_Do.classList.add('todo');
-	To_Do.setAttribute('data-id', Create_ID());
-	To_Do.innerHTML = To_Do_Bar;
-	const input_string = item.closest('.add-todo').querySelector('input[name="todo"]').value;
-	To_Do.querySelector('input').value = input_string;
-	To_Do.querySelector('.color-list>.present').style.background = getComputedStyle(item.closest('.add-todo').querySelector('.present')).background;
-	const parent = document.getElementById('content');
-	
-	parent.appendChild(To_Do);
+	const id = Create_ID();
+	const todo = item.closest('.add-todo').querySelector('input[name="todo"]').value;
+	const color = getComputedStyle(item.closest('.add-todo').querySelector('.present')).background;
+	const due = null;
+	const bar_data = {
+		"todo": todo,
+		"color": color,
+		"due": due
+	};
+	console.log(id);
+	console.log(todo);
+	console.log(color);
+	localStorage.setItem(id, JSON.stringify(bar_data));
+	Render_Bar(id);
 	requestAnimationFrame(() => {
-		const p_list = parent.querySelectorAll('.todo');
+		const p_list = document.getElementById('content').querySelectorAll('.todo');
 		p_list[p_list.length - 1].classList.add('show');
-	})
+	});
 }
 function Render_Bar(id){
 	const bar = document.createElement('div');
 	bar.classList.add('todo');
 	bar.setAttribute('data-id', id);
-	const element = JSON.parse(localstorage.getItem(id));
+	const element = JSON.parse(localStorage.getItem(id));
 	bar.innerHTML = To_Do_Bar;
 	bar.querySelector('input').value = element.todo;
-	bar.querySelector('.color-list>.present').style.background = id.color;
+	bar.querySelector('.color-list>.present').style.background = element.color;
 	const parent = document.getElementById('content');
 	parent.appendChild(bar);
-	requestAnimationFrame(() => {
-		const p_list = parent.querySelectorAll('.todo');
-		p_list[p_list.length - 1].classList.add('show');
-	})
 }
 
 function etc_show(item){
@@ -114,13 +115,15 @@ function etc_hide(item){
 }
 
 function Button_Edit(item){
-	const setting = document.getElementById('setting-background');
 	if(setting.classList.contains("show")){
 		present_object = null;
 	}
 	else{
 		present_object = item.closest(".todo");
-		
+		const element = JSON.parse(localStorage.getItem(present_object.dataset.id));
+		setting.querySelector('#date').value = element.due;
+		setting.querySelector('#todo').value = element.todo;
+		setting.querySelector('.present').style.background = element.color;
 	}
 	setting.classList.toggle('show');
 }
@@ -129,11 +132,36 @@ function Button_Check(item){
 	
 }
 
-function Button_Save(){
-	
+function Button_Save(item){
+	if(!(present_object === null)){
+		const due = setting.querySelector('#date').value;
+		const todo = setting.querySelector('#todo').value;
+		const color =  getComputedStyle(setting.querySelector('.present')).background;	
+		const bar_data = {
+			"due": due,
+			"todo": todo,
+			"color": color
+		};
+		localStorage.setItem(present_object.dataset.id, JSON.stringify(bar_data));
+		present_object.querySelector('input[name="todo"]').value = todo;
+		present_object.querySelector('.present').style.background = color;
+		present_object = null;
+		setting.classList.toggle('show');
+	}
 }
 
 function Create_ID(){
-	return `${Math.floor(Math.random()*10000)}${Date.now()}`;
+	return `${Date.now()}`;
 }
 
+window.onload = function(){
+	const keys = Object.keys(localStorage);
+	keys.sort();
+	for(const key of keys) Render_Bar(key);
+	requestAnimationFrame(() => {
+		const p_list = document.getElementById('content').querySelectorAll('.todo');
+		for(let i = 0; i < p_list.length; i++){
+			p_list[i].classList.add('show');
+		}
+	});
+}
