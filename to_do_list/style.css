@@ -42,6 +42,15 @@ main{
 	border: 1px solid #ccc;
 	background: #ddd;
 }
+#content>.todo.disabled{
+	background: #aaa;
+}
+#content>.todo.disabled>input, button, .color-list, .set{
+	background: inherit;
+}
+#content>.todo.disabled>.set>*{
+	background: inherit;
+}
 #content>.todo{
 	max-width: 0;
 	opacity: 0;
@@ -285,4 +294,43 @@ input[name="todo"]{
 #setting-background.show{
 	opacity: 1;
 	transform: scaleY(1);
+}
+.todo-end{
+	opacity: 0;
+	width: 720px;
+	position: absolute;
+	text-align: right;
+	font-size: 1.4rem;
+	color: black;
+	transition: opacity 0.3s ease;
+}
+.todo-end::after{
+	content: "";
+	position: absolute;
+	top: 19px;
+	left: 0;
+	width: 0;
+	height: 3px;
+	border-radius: 1rem;
+	background-color: black;
+	display: block;
+	transition: width 0.3s ease;
+}
+.todo-end.show::after{
+	width: 700px;
+}
+.todo-end.show{
+	opacity: 1;
+}
+.todo-end.clear{
+	color: green;
+}
+.todo-end.clear::after{
+	background-color: green;
+}
+.todo-end.fail{
+	color: red;
+}
+.todo-end.fail::after{
+	background-color: red;
 }

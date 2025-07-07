@@ -6,6 +6,8 @@ let present_object = null;
 const setting = document.getElementById('setting-background');
 
 const To_Do_Bar = `
+<div class="todo-end">
+</div>
 <div class="color-list">
 	<button class="present"></button>
 </div>
@@ -76,7 +78,8 @@ function Add_To_Do(item){
 	const bar_data = {
 		"todo": todo,
 		"color": color,
-		"due": due
+		"due": due,
+		"check": null
 	};
 	console.log(id);
 	console.log(todo);
@@ -96,6 +99,12 @@ function Render_Bar(id){
 	bar.innerHTML = To_Do_Bar;
 	bar.querySelector('input').value = element.todo;
 	bar.querySelector('.color-list>.present').style.background = element.color;
+	if(!(element.check === null)){
+		bar.classList.add('disabled');
+		bar.querySelector('.todo-end').classList.add(element.check);
+		bar.querySelector('.todo-end').classList.add('show');
+		bar.querySelector('.todo-end').innerHTML = element.check;
+	}
 	const parent = document.getElementById('content');
 	parent.appendChild(bar);
 }
@@ -129,7 +138,15 @@ function Button_Edit(item){
 }
 
 function Button_Check(item){
-	
+	const obj = item.closest('.todo');
+	obj.querySelector('.todo-end').innerHTML = 'clear';
+	obj.querySelector('.todo-end').classList.add('show');
+	obj.querySelector('.todo-end').classList.add('clear');
+	obj.classList.add('disabled');
+	const present_id = obj.dataset.id;
+	const bar_data = JSON.parse(localStorage.getItem(present_id));
+	bar_data.check = 'clear';
+	localStorage.setItem(present_id, JSON.stringify(bar_data));
 }
 
 function Button_Delete(){
@@ -152,7 +169,8 @@ function Button_Save(item){
 		const bar_data = {
 			"due": due,
 			"todo": todo,
-			"color": color
+			"color": color,
+			"check": null
 		};
 		localStorage.setItem(present_object.dataset.id, JSON.stringify(bar_data));
 		present_object.querySelector('input[name="todo"]').value = todo;
