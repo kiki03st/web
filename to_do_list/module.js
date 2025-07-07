@@ -132,6 +132,18 @@ function Button_Check(item){
 	
 }
 
+function Button_Delete(){
+	if(!(present_object===null)){
+		const present_id = present_object.dataset.id;
+		localStorage.removeItem(present_id);
+		setting.classList.toggle('show');
+		present_object.classList.remove('show');
+		present_object.addEventListener('transitionend', ()=> {
+			present_object.remove();
+		}, {once: true});
+	}
+}
+
 function Button_Save(item){
 	if(!(present_object === null)){
 		const due = setting.querySelector('#date').value;
