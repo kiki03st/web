@@ -24,7 +24,7 @@ const To_Do_Bar = `
 				<path stroke-linecap="round" stroke-linejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
 			</svg>
 		</button>
-		<button class='check' onclick="Button_Check(this)">
+		<button class='check' onclick="Button_Check(this, 'clear')">
 			<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
 				<path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" />
 			</svg>
@@ -137,15 +137,15 @@ function Button_Edit(item){
 	setting.classList.toggle('show');
 }
 
-function Button_Check(item){
+function Button_Check(item, stat){
 	const obj = item.closest('.todo');
 	obj.querySelector('.todo-end').innerHTML = 'clear';
 	obj.querySelector('.todo-end').classList.add('show');
-	obj.querySelector('.todo-end').classList.add('clear');
+	obj.querySelector('.todo-end').classList.add(stat);
 	obj.classList.add('disabled');
 	const present_id = obj.dataset.id;
 	const bar_data = JSON.parse(localStorage.getItem(present_id));
-	bar_data.check = 'clear';
+	bar_data.check = stat;
 	localStorage.setItem(present_id, JSON.stringify(bar_data));
 }
 
@@ -194,4 +194,36 @@ window.onload = function(){
 			p_list[i].classList.add('show');
 		}
 	});
+	Check_Due_Date(100);
+}
+
+function Check_Due_Date(timeout){
+	const timer = setInterval(() => {
+		console.log('------check time------')
+		const keys = Object.keys(localStorage);
+
+		let t_list = {};
+		
+		for(const key of keys){
+			const data = JSON.parse(localStorage.getItem(key));
+			if(data.due !== null && data.check === null) t_list[key] = data.due;
+		}
+		const now = Date.now();
+		for(key in t_list){
+			if(new Date(t_list[key]).getTime() - now < 0){
+				console.log(`id ${key} is fail.`);
+				const bar = document.querySelectorAll('#content>.todo');
+				bar.forEach(b => {
+					if(b.dataset.id === key){
+						Button_Check(b, 'fail');
+					}
+				})
+			}
+			else{
+				console.log(`id ${key} is not time-out.`);
+			}
+			console.log(`now is ${now}`);
+			console.log(`due-date is ${new Date(t_list[key]).getTime()}.`);
+		}
+	}, timeout);
 }
