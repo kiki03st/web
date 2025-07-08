@@ -139,7 +139,7 @@ function Button_Edit(item){
 
 function Button_Check(item, stat){
 	const obj = item.closest('.todo');
-	obj.querySelector('.todo-end').innerHTML = 'clear';
+	obj.querySelector('.todo-end').innerHTML = stat;
 	obj.querySelector('.todo-end').classList.add('show');
 	obj.querySelector('.todo-end').classList.add(stat);
 	obj.classList.add('disabled');
