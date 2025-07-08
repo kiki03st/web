@@ -90,6 +90,7 @@ function Add_To_Do(item){
 		const p_list = document.getElementById('content').querySelectorAll('.todo');
 		p_list[p_list.length - 1].classList.add('show');
 	});
+	item.closest('.add-todo').querySelector('input[name="todo"]').value = "";
 }
 function Render_Bar(id){
 	const bar = document.createElement('div');
@@ -139,14 +140,26 @@ function Button_Edit(item){
 
 function Button_Check(item, stat){
 	const obj = item.closest('.todo');
-	obj.querySelector('.todo-end').innerHTML = stat;
-	obj.querySelector('.todo-end').classList.add('show');
-	obj.querySelector('.todo-end').classList.add(stat);
-	obj.classList.add('disabled');
 	const present_id = obj.dataset.id;
 	const bar_data = JSON.parse(localStorage.getItem(present_id));
-	bar_data.check = stat;
-	localStorage.setItem(present_id, JSON.stringify(bar_data));
+	if(bar_data.check === null){
+		obj.querySelector('.todo-end').innerHTML = stat;
+		obj.querySelector('.todo-end').classList.add('show');
+		obj.querySelector('.todo-end').classList.add(stat);
+		obj.classList.add('disabled');
+		bar_data.check = stat;
+		localStorage.setItem(present_id, JSON.stringify(bar_data));
+	}
+	else{
+		obj.querySelector('.todo-end').innerHTML = "";
+		obj.querySelector('.todo-end').classList.remove('show');
+		obj.querySelector('.todo-end').classList.remove('clear');
+		obj.querySelector('.todo-end').classList.remove('fail');
+		obj.classList.remove('disabled');
+		bar_data.check = null;
+		if(bar_data.due !== null) bar_data.due = null;
+		localStorage.setItem(present_id, JSON.stringify(bar_data));
+	}
 }
 
 function Button_Delete(){
